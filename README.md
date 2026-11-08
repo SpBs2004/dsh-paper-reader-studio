@@ -122,9 +122,62 @@ npm run smoke:ui            # 无头 Chrome：真实面板开 PDF、缩放、切
 
 ## 安装
 
-- **本机目录**：`plugin_manager` 的 `install_bundle`，`target` 指向本目录。
-- **GitHub**：仓库公开后可用 `install_bundle`，`target` 为 `github:SpBs2004/dsh-paper-reader`。
-- 安装后刷新一次页面；宿主半改动需要重载插件（`plugin_manager` 关掉再打开，或重启 Harness）。
+插件以 bundle 形式发布，装进 Harness 的某个 profile：桌面版（`DeepSeek Harness.exe`）是 `desktop`，
+`dsh web` 是 `web`。profile 名就是 `%USERPROFILE%\.dsh\profiles\` 下的目录名。
+
+### 方式一：对话里安装（推荐）
+
+在 DSH 会话里直接说：
+
+> 安装插件 github:SpBs2004/dsh-paper-reader
+
+即让模型调用：
+
+```text
+plugin_manager(action="install_bundle", target="github:SpBs2004/dsh-paper-reader")
+```
+
+### 方式二：命令行安装
+
+需要本机有 `dsh` CLI 和 pnpm（`pnpm -v` 能输出即可）：
+
+```bash
+# 桌面版（DeepSeek Harness.exe）
+dsh plugin --profile desktop add github:SpBs2004/dsh-paper-reader
+
+# dsh web / 其它 profile 换成对应名字
+dsh plugin --profile web add github:SpBs2004/dsh-paper-reader
+```
+
+`dsh plugin` 把参数转发给 profile 目录里的 pnpm，安装结束后自动把声明了 `dsh.bundle` 的新依赖
+追加进 `dsh.profile.bundles`。**命令行安装不会热加载，装完要重启 Harness。**
+
+确认已进入 bundle 层（Windows 上可接 `| findstr /i paper-reader`）：
+
+```bash
+dsh --profile desktop --dump-config
+```
+
+卸载和升级（git 依赖会固定在安装时的 commit，升级请先删再装）：
+
+```bash
+dsh plugin --profile desktop remove dsh-paper-reader
+dsh plugin --profile desktop add github:SpBs2004/dsh-paper-reader
+```
+
+### 方式三：从本机目录安装（改代码用）
+
+```bash
+dsh plugin --profile desktop add link:E:\path\to\dsh-paper-reader
+```
+
+本地 `link:` 安装直接读工作目录里的 `client.js`，改完客户端重新 `npm run build`、刷新页面即可；
+之后如果改成 GitHub 安装，依赖会替换成仓库版本，本地改动不再生效。
+
+### 装完
+
+刷新页面（Ctrl+R）。宿主半有改动（例如新增了 PDF 路由）时，需要重载插件——`plugin_manager`
+关掉再打开，或重启 Harness；打开 PDF 显示「渲染失败 404」就是这种情形。
 
 ## 许可
 
