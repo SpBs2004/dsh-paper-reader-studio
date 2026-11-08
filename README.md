@@ -125,7 +125,10 @@ npm run smoke:ui            # 无头 Chrome：真实面板开 PDF、缩放、切
 插件以 bundle 形式发布，装进 Harness 的某个 profile：桌面版（`DeepSeek Harness.exe`）是 `desktop`，
 `dsh web` 是 `web`。profile 名就是 `%USERPROFILE%\.dsh\profiles\` 下的目录名。
 
-### 方式一：对话里安装（推荐）
+> 桌面版的 `desktop` profile 由 Electron 应用独占管理，命令行 `dsh` 会直接拒绝它；
+> 桌面版请用下面的方式一。命令行方式适用于 `web` / `headless` / 自建 profile。
+
+### 方式一：应用内安装（推荐；桌面版只能这样装）
 
 在 DSH 会话里直接说：
 
@@ -137,42 +140,35 @@ npm run smoke:ui            # 无头 Chrome：真实面板开 PDF、缩放、切
 plugin_manager(action="install_bundle", target="github:SpBs2004/dsh-paper-reader")
 ```
 
-### 方式二：命令行安装
+装本机目录（改代码时）把 `target` 换成插件目录的绝对路径；`plugin_manager` 会装成 `link:` 依赖，
+之后重新 `npm run build` 并刷新页面就能看到客户端改动。
 
-需要本机有 `dsh` CLI 和 pnpm（`pnpm -v` 能输出即可）：
+### 方式二：命令行安装（web / headless / 自建 profile）
+
+需要与 Harness 版本一致的 `dsh` CLI 和 pnpm：
 
 ```bash
-# 桌面版（DeepSeek Harness.exe）
-dsh plugin --profile desktop add github:SpBs2004/dsh-paper-reader
-
-# dsh web / 其它 profile 换成对应名字
 dsh plugin --profile web add github:SpBs2004/dsh-paper-reader
 ```
 
-`dsh plugin` 把参数转发给 profile 目录里的 pnpm，安装结束后自动把声明了 `dsh.bundle` 的新依赖
-追加进 `dsh.profile.bundles`。**命令行安装不会热加载，装完要重启 Harness。**
+`dsh plugin` 把参数转发到 profile 目录的 pnpm，安装结束后自动把声明了 `dsh.bundle` 的新依赖
+追加进 `dsh.profile.bundles`。**命令行安装不会热加载，装完要重启对应的 Harness 进程。**
 
-确认已进入 bundle 层（Windows 上可接 `| findstr /i paper-reader`）：
-
-```bash
-dsh --profile desktop --dump-config
-```
+确认装上了：profile 目录里的 `package.json` 会有 `dsh-paper-reader` 依赖，且出现在
+`dsh.profile.bundles` 数组里。
 
 卸载和升级（git 依赖会固定在安装时的 commit，升级请先删再装）：
 
 ```bash
-dsh plugin --profile desktop remove dsh-paper-reader
-dsh plugin --profile desktop add github:SpBs2004/dsh-paper-reader
+dsh plugin --profile web remove dsh-paper-reader
+dsh plugin --profile web add github:SpBs2004/dsh-paper-reader
 ```
 
-### 方式三：从本机目录安装（改代码用）
+### 方式三：本机目录（web / headless 开发）
 
 ```bash
-dsh plugin --profile desktop add link:E:\path\to\dsh-paper-reader
+dsh plugin --profile web add link:E:\path\to\dsh-paper-reader
 ```
-
-本地 `link:` 安装直接读工作目录里的 `client.js`，改完客户端重新 `npm run build`、刷新页面即可；
-之后如果改成 GitHub 安装，依赖会替换成仓库版本，本地改动不再生效。
 
 ### 装完
 
