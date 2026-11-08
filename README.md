@@ -125,8 +125,8 @@ npm run smoke:ui            # 无头 Chrome：真实面板开 PDF、缩放、切
 插件以 bundle 形式发布，装进 Harness 的某个 profile：桌面版（`DeepSeek Harness.exe`）是 `desktop`，
 `dsh web` 是 `web`。profile 名就是 `%USERPROFILE%\.dsh\profiles\` 下的目录名。
 
-> 桌面版的 `desktop` profile 由 Electron 应用独占管理，命令行 `dsh` 会直接拒绝它；
-> 桌面版请用下面的方式一。命令行方式适用于 `web` / `headless` / 自建 profile。
+> 较新的 `dsh` CLI 会拒绝 `desktop` profile（`profile "desktop" is managed exclusively by the
+> Electron application`），桌面版请用下面的方式一。命令行方式适用于 `web` / `headless` / 自建 profile。
 
 ### 方式一：应用内安装（推荐；桌面版只能这样装）
 
