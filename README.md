@@ -1,9 +1,9 @@
-# 论文阅读器（dsh-paper-reader）
+# 论文阅读器（dsh-paper-reader-studio）
 
 给 DeepSeek Harness 装一个「论文」页：论文库 → 章节大纲 → 正文（TeX 走 KaTeX，PDF 走页面渲染）→ 中英对照 → 笔记，
 选中原文可以直接把它连同出处发进当前对话；同时给模型一套 `paper` 工具，让它按章节读、检索、写笔记、出审稿材料。
 
-仓库：<https://github.com/SpBs2004/dsh-paper-reader>（MIT）
+仓库：<https://github.com/SpBs2004/dsh-paper-reader-studio>（MIT）
 
 ## 打开
 
@@ -132,12 +132,12 @@ npm run smoke:ui            # 无头 Chrome：真实面板开 PDF、缩放、切
 
 在 DSH 会话里直接说：
 
-> 安装插件 github:SpBs2004/dsh-paper-reader
+> 安装插件 github:SpBs2004/dsh-paper-reader-studio
 
 即让模型调用：
 
 ```text
-plugin_manager(action="install_bundle", target="github:SpBs2004/dsh-paper-reader")
+plugin_manager(action="install_bundle", target="github:SpBs2004/dsh-paper-reader-studio")
 ```
 
 装本机目录（改代码时）把 `target` 换成插件目录的绝对路径；`plugin_manager` 会装成 `link:` 依赖，
@@ -148,26 +148,26 @@ plugin_manager(action="install_bundle", target="github:SpBs2004/dsh-paper-reader
 需要与 Harness 版本一致的 `dsh` CLI 和 pnpm：
 
 ```bash
-dsh plugin --profile web add github:SpBs2004/dsh-paper-reader
+dsh plugin --profile web add github:SpBs2004/dsh-paper-reader-studio
 ```
 
 `dsh plugin` 把参数转发到 profile 目录的 pnpm，安装结束后自动把声明了 `dsh.bundle` 的新依赖
 追加进 `dsh.profile.bundles`。**命令行安装不会热加载，装完要重启对应的 Harness 进程。**
 
-确认装上了：profile 目录里的 `package.json` 会有 `dsh-paper-reader` 依赖，且出现在
+确认装上了：profile 目录里的 `package.json` 会有 `dsh-paper-reader-studio` 依赖，且出现在
 `dsh.profile.bundles` 数组里。
 
 卸载和升级（git 依赖会固定在安装时的 commit，升级请先删再装）：
 
 ```bash
-dsh plugin --profile web remove dsh-paper-reader
-dsh plugin --profile web add github:SpBs2004/dsh-paper-reader
+dsh plugin --profile web remove dsh-paper-reader-studio
+dsh plugin --profile web add github:SpBs2004/dsh-paper-reader-studio
 ```
 
 ### 方式三：本机目录（web / headless 开发）
 
 ```bash
-dsh plugin --profile web add link:E:\path\to\dsh-paper-reader
+dsh plugin --profile web add link:E:\path\to\dsh-paper-reader-studio
 ```
 
 ### 装完

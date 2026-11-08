@@ -7,7 +7,9 @@
 import { createElement as h, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 export const PDFJS_BASE = '/paper-reader/static/pdfjs/';
-export const PDF_STORAGE_PREFIX = 'dsh-paper-reader:pdf:';
+export const PDF_STORAGE_PREFIX = 'dsh-paper-reader-studio:pdf:';
+/** 旧包名的阅读位置键；改名后只读回退，写入一律用新键。 */
+const LEGACY_PDF_STORAGE_PREFIX = 'dsh-paper-reader:pdf:';
 
 const MIN_SCALE = 0.25;
 const MAX_SCALE = 4;
@@ -43,7 +45,10 @@ export function clampScale(value) {
 export function readProgress(storage, id) {
   if (storage === null || storage === undefined || id === null || id === undefined) return null;
   try {
-    const raw = storage.getItem(`${PDF_STORAGE_PREFIX}${id}`);
+    let raw = storage.getItem(`${PDF_STORAGE_PREFIX}${id}`);
+    if (typeof raw !== 'string' || raw === '') {
+      raw = storage.getItem(`${LEGACY_PDF_STORAGE_PREFIX}${id}`);
+    }
     if (typeof raw !== 'string' || raw === '') return null;
     const value = JSON.parse(raw);
     const page = Number.isInteger(value?.page) && value.page > 0 ? value.page : null;

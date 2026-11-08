@@ -37,7 +37,7 @@ function ensureStyle() {
   const existing = document.querySelector(`style[data-plugin-css="${STYLE_ID}"]`);
   if (existing !== null) return () => {};
   const tag = document.createElement('style');
-  tag.dataset.plugin = 'dsh-paper-reader';
+  tag.dataset.plugin = 'dsh-paper-reader-studio';
   tag.dataset.pluginCss = STYLE_ID;
   tag.textContent = PANEL_CSS;
   document.head.appendChild(tag);

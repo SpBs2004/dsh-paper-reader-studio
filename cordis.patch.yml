@@ -1,8 +1,8 @@
-# Bundle layer contributed by dsh-paper-reader.
+# Bundle layer contributed by dsh-paper-reader-studio.
 # Inserts the Host half: the `paper` agent tool and the panel RPC route.
 - insert:
     - id: paper-reader
-      name: 'dsh-paper-reader'
+      name: 'dsh-paper-reader-studio'
       config:
         # 额外论文根目录；当前工作目录始终作为第一个可选根出现。
         # 面板里用 ＋/⚙ 增删即可，默认留空；示例：

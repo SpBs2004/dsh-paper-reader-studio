@@ -33,7 +33,7 @@ const indented = code
 
 const wrapped = `// 由 build.mjs 生成：注册 lazy-CJS 工厂，模块体在首次 materialize 时执行
 window.__ModuleLoader__.load({
-  id: 'dsh-paper-reader',
+  id: 'dsh-paper-reader-studio',
   factory: (require) => {
     var module = { exports: {} };
     var exports = module.exports;

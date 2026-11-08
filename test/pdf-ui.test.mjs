@@ -54,6 +54,14 @@ test('readProgress / writeProgress：往返 + 坏数据容错', () => {
   writeProgress({ setItem() { throw new Error('quota'); } }, 'p4', { page: 1, scale: 1, fit: true });
 });
 
+test('改名后仍能读回旧包名的阅读位置，并写回新键', () => {
+  const storage = fakeStorage();
+  storage.setItem('dsh-paper-reader:pdf:legacy', JSON.stringify({ page: 12, scale: 1.5, fit: false }));
+  assert.deepEqual(readProgress(storage, 'legacy'), { page: 12, scale: 1.5, fit: false });
+  writeProgress(storage, 'legacy', { page: 13, scale: 1.5, fit: false });
+  assert.equal(storage.map.has('dsh-paper-reader-studio:pdf:legacy'), true);
+});
+
 test('sectionForPage：按页码取最近章节', () => {
   const outline = [
     { id: 'a', title: 'Intro', page: 1 },

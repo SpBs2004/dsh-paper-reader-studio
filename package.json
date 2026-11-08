@@ -1,15 +1,15 @@
 {
-  "name": "dsh-paper-reader",
-  "version": "0.2.0",
+  "name": "dsh-paper-reader-studio",
+  "version": "0.2.1",
   "private": true,
   "description": "论文阅读器：论文库、章节大纲、KaTeX 公式、中英对照、选中提问、笔记与审稿材料",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SpBs2004/dsh-paper-reader.git"
+    "url": "git+https://github.com/SpBs2004/dsh-paper-reader-studio.git"
   },
-  "homepage": "https://github.com/SpBs2004/dsh-paper-reader#readme",
+  "homepage": "https://github.com/SpBs2004/dsh-paper-reader-studio#readme",
   "bugs": {
-    "url": "https://github.com/SpBs2004/dsh-paper-reader/issues"
+    "url": "https://github.com/SpBs2004/dsh-paper-reader-studio/issues"
   },
   "type": "module",
   "main": "index.js",

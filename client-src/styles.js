@@ -1,4 +1,4 @@
-export const STYLE_ID = 'dsh-paper-reader';
+export const STYLE_ID = 'dsh-paper-reader-studio';
 
 export const PANEL_CSS = `
 .pr-panel {
